@@ -1,9 +1,6 @@
 ﻿using PropertyChanged;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace CounterTrigger
@@ -27,6 +24,7 @@ namespace CounterTrigger
 
         #region Fields
         bool Reset = false;
+        bool RunMeasurement = false;
         int TempCounter = 1; 
         #endregion
 
@@ -48,18 +46,20 @@ namespace CounterTrigger
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            Counters();
+            TimeCommand = DateTime.Now;
 
-            Measurement3();
-            
-            MeasurementDisplay();
+            if (RunMeasurement==true)
+            {
+                Counters();
 
+                Measurement5();
+
+                MeasurementDisplay(); 
+            }
         }
 
         private void Counters()
         {
-            TimeCommand = DateTime.Now;
-
             if (Reset == false)
             {
                 CounterDiv2 = Counter / 2;
@@ -131,6 +131,7 @@ namespace CounterTrigger
                 CounterTemp++;
                 Counter++;
                 Reset = true;
+                RunMeasurement = false;
             }
             else
             {
@@ -145,6 +146,7 @@ namespace CounterTrigger
                 CounterTemp++;
                 Counter++;
                 Reset = true;
+                RunMeasurement = false;
             }
             else
             {
@@ -159,6 +161,7 @@ namespace CounterTrigger
                 CounterTemp++;
                 Counter++;
                 Reset = true;
+                RunMeasurement = false;
             }
             else
             {
@@ -173,11 +176,41 @@ namespace CounterTrigger
                 CounterTemp++;
                 Counter++;
                 Reset = true;
+                RunMeasurement = false;
             }
             else
             {
                 CounterTemp = CounterDiv6;
             }
         }
+
+        #region RelayCommand
+        void RunMeasurementButtonCommand()
+        {
+            RunMeasurement = true;
+        }
+
+        /// <summary>
+        /// Determines whether this instance [can exit application execute].
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if this instance [can exit application execute]; otherwise, <c>false</c>.
+        /// </returns>
+        bool CanRunMeasurementButtonExecute()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets the exit application click.
+        /// </summary>
+        /// <value>
+        /// The exit application click.
+        /// </value>
+        public ICommand RunMeasurementButtonClick //bind to "ExitApplicationClick" name in XAML
+        {
+            get { return new RelayCommand(RunMeasurementButtonCommand, CanRunMeasurementButtonExecute); }
+        } 
+        #endregion
     }
 }
