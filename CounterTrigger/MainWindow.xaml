@@ -8,9 +8,12 @@
         <local:ViewModel />
     </Window.DataContext>
     <Grid>
-        <StackPanel HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="497">
+        <StackPanel HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="497">
             <TextBlock Text="{Binding TimeCommand}" Height="23"/>
             <TextBlock Text="{Binding Counter}" Height="23"/>
+            <TextBlock Text="{Binding CounterDiv2}" Height="23"/>
+            <TextBlock Text="{Binding CounterDiv3}" Height="23"/>
+            <TextBlock Text="{Binding CounterString}" Height="23"/>
         </StackPanel>
 
     </Grid>

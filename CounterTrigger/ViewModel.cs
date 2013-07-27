@@ -13,6 +13,9 @@ namespace CounterTrigger
     {
         public DateTime TimeCommand { get; set; }
         public int Counter { get; set; }
+        public int CounterDiv2 { get; set; }
+        public int CounterDiv3 { get; set; }
+        public string CounterString { get; set; }
 
         public ViewModel()
         {
@@ -31,6 +34,18 @@ namespace CounterTrigger
         {
             TimeCommand = DateTime.Now;
             Counter++;
+            CounterDiv2 = Counter / 2;
+            CounterDiv3 = Counter / 3;
+
+            if ((Counter % 2) == 0)
+            {
+                CounterString = "Counter 1 is even";
+            }
+            else
+            {
+                CounterString = "Counter 1 is odd";
+            }
+
         } 
     }
 }
