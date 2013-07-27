@@ -10,10 +10,17 @@
     <Grid>
         <StackPanel HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="497">
             <TextBlock Text="{Binding TimeCommand}" Height="23"/>
+            <TextBlock Text="{Binding CounterTemp}" Height="23" FontSize="14"/>
+            <TextBlock Text="{Binding CounterString}" Height="23"/>
             <TextBlock Text="{Binding Counter}" Height="23"/>
             <TextBlock Text="{Binding CounterDiv2}" Height="23"/>
             <TextBlock Text="{Binding CounterDiv3}" Height="23"/>
-            <TextBlock Text="{Binding CounterString}" Height="23"/>
+            <TextBlock Text="{Binding CounterDiv4}" Height="23"/>
+            <TextBlock Text="{Binding CounterDiv5}" Height="23"/>
+            <TextBlock Text="{Binding CounterDiv6}" Height="23"/>
+
+
+
         </StackPanel>
 
     </Grid>
