@@ -18,6 +18,7 @@ namespace CounterTrigger
         public int CounterDiv5 { get; set; }
         public int CounterDiv6 { get; set; }
         public int CounterTemp { get; set; }
+        public int NumberOfMeasurements { get; set; }
         public string CounterString { get; set; } 
         #endregion
 
@@ -26,6 +27,7 @@ namespace CounterTrigger
         bool Reset = false;
         bool RunMeasurement = false;
         int TempCounter = 1; 
+        int[] CountersArray = new int[6];
         #endregion
 
         public ViewModel()
@@ -52,9 +54,28 @@ namespace CounterTrigger
             {
                 Counters();
 
-                Measurement5();
+                MeasurementsFunction(NumberOfMeasurements, CountersArray);
 
                 MeasurementDisplay(); 
+            }
+        }
+
+        private int CounterFunction(int Measurements)
+        {
+            if (Reset == false)
+            {
+                int temp;
+                temp = Counter / Measurements;
+                Counter++;
+                return temp;
+                
+            }
+            else
+            {
+                Counter = 0;
+                Counter++;
+                Reset = false;
+                return Counter / Measurements;
             }
         }
 
@@ -68,6 +89,13 @@ namespace CounterTrigger
                 CounterDiv5 = Counter / 5;
                 CounterDiv6 = Counter / 6;
                 Counter++;
+
+                CountersArray[0] = Counter;
+                CountersArray[1] = CounterDiv2;
+                CountersArray[2] = CounterDiv3;
+                CountersArray[3] = CounterDiv4;
+                CountersArray[4] = CounterDiv5;
+                CountersArray[5] = CounterDiv6;
             }
             else
             {
@@ -79,7 +107,17 @@ namespace CounterTrigger
                 CounterDiv6 = Counter / 6;
                 Counter++;
                 Reset = false;
+
+                CountersArray[0] = Counter;
+                CountersArray[1] = CounterDiv2;
+                CountersArray[2] = CounterDiv3;
+                CountersArray[3] = CounterDiv4;
+                CountersArray[4] = CounterDiv5;
+                CountersArray[5] = CounterDiv6;
+
             }
+
+            
         }
 
         private void MeasurementDisplay()
@@ -94,6 +132,93 @@ namespace CounterTrigger
                 CounterString = "Adjustment";
                 TempCounter = 1;
             }
+        }
+
+        private void MeasurementsFunction(int Measurement, int[] CountersArray)
+        {
+            switch (Measurement)
+            {
+                case 1:
+                    if (CountersArray[0] % 2 != 0)
+                    {
+                        CounterTemp++;
+                        Counter++;
+                        Reset = true;
+                    }
+                    else
+                    {
+                        CounterTemp = CountersArray[0];
+                    }
+                    break;
+                case 2:
+                    if (CountersArray[1] % 2 != 0)
+                    {
+                        CounterTemp++;
+                        Counter++;
+                        Reset = true;
+                    }
+                    else
+                    {
+                        CounterTemp = CountersArray[1];
+                    }
+                    break;
+                case 3:
+                    if (CountersArray[2] % 2 != 0)
+                    {
+                        CounterTemp++;
+                        Counter++;
+                        Reset = true;
+                        RunMeasurement = false;
+                    }
+                    else
+                    {
+                        CounterTemp = CountersArray[2];
+                    }
+                    break;
+                case 4:
+                    if (CountersArray[3] % 2 != 0)
+                    {
+                        CounterTemp++;
+                        Counter++;
+                        Reset = true;
+                        RunMeasurement = false;
+                    }
+                    else
+                    {
+                        CounterTemp = CountersArray[3];
+                    }
+                    break;
+                case 5:
+                    if (CountersArray[4] % 2 != 0)
+                    {
+                        CounterTemp++;
+                        Counter++;
+                        Reset = true;
+                        RunMeasurement = false;
+                    }
+                    else
+                    {
+                        CounterTemp = CountersArray[4];
+                    }
+                    break;
+                case 6:
+                    if (CountersArray[5] % 2 != 0)
+                    {
+                        CounterTemp++;
+                        Counter++;
+                        Reset = true;
+                        RunMeasurement = false;
+                    }
+                    else
+                    {
+                        CounterTemp = CountersArray[5];
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+
         }
 
         private void Measurement1()
