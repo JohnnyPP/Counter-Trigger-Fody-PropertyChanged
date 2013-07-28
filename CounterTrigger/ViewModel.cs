@@ -6,8 +6,9 @@ using System.Windows.Threading;
 namespace CounterTrigger
 {
     [ImplementPropertyChanged]
-    class ViewModel
+    public class ViewModel
     {
+        //MeasurementsClass MC = new MeasurementsClass();
 
         #region Properties
         public DateTime TimeCommand { get; set; }
@@ -19,15 +20,15 @@ namespace CounterTrigger
         public int CounterDiv6 { get; set; }
         public int CounterTemp { get; set; }
         public int NumberOfMeasurements { get; set; }
-        public string CounterString { get; set; } 
+        public string CounterString { get; set; }           //"Measurement " + TempCounter.ToString();
         #endregion
 
 
         #region Fields
-        bool Reset = false;
-        bool RunMeasurement = false;
-        int TempCounter = 1; 
-        int[] CountersArray = new int[6];
+        public bool Reset = false;
+        public bool RunMeasurement = false;
+        public int TempCounter = 1; 
+        public int[] CountersArray = new int[6];
         #endregion
 
         public ViewModel()
@@ -55,27 +56,8 @@ namespace CounterTrigger
                 Counters();
 
                 MeasurementsFunction(NumberOfMeasurements, CountersArray);
-
+              
                 MeasurementDisplay(); 
-            }
-        }
-
-        private int CounterFunction(int Measurements)
-        {
-            if (Reset == false)
-            {
-                int temp;
-                temp = Counter / Measurements;
-                Counter++;
-                return temp;
-                
-            }
-            else
-            {
-                Counter = 0;
-                Counter++;
-                Reset = false;
-                return Counter / Measurements;
             }
         }
 
@@ -116,36 +98,20 @@ namespace CounterTrigger
                 CountersArray[5] = CounterDiv6;
 
             }
-
-            
         }
 
-        private void MeasurementDisplay()
-        {
-            if ((CounterTemp % 2) == 0)
-            {
-                CounterString = "Measurement " + TempCounter.ToString();
-                TempCounter++;
-            }
-            else
-            {
-                CounterString = "Adjustment";
-                TempCounter = 1;
-            }
-        }
-
-        private void MeasurementsFunction(int Measurement, int[] CountersArray)
+        public void MeasurementsFunction(int Measurement, int[] CountersArray)
         {
             switch (Measurement)
             {
                 case 1:
-                    if (CountersArray[0] % 2 != 0)
+                    if (CountersArray[0] % 2 != 0)          //is odd?
                     {
-                        CounterTemp++;
-                        Counter++;
+
+                        CounterTemp++;                      //measurement is on as long as CounterTemp==0 
                         Reset = true;
                     }
-                    else
+                    else                                    //is even? //this is the always the case 
                     {
                         CounterTemp = CountersArray[0];
                     }
@@ -154,7 +120,6 @@ namespace CounterTrigger
                     if (CountersArray[1] % 2 != 0)
                     {
                         CounterTemp++;
-                        Counter++;
                         Reset = true;
                     }
                     else
@@ -166,9 +131,8 @@ namespace CounterTrigger
                     if (CountersArray[2] % 2 != 0)
                     {
                         CounterTemp++;
-                        Counter++;
                         Reset = true;
-                        RunMeasurement = false;
+                        RunMeasurement = false;             //stops measurement after adjustment
                     }
                     else
                     {
@@ -179,7 +143,6 @@ namespace CounterTrigger
                     if (CountersArray[3] % 2 != 0)
                     {
                         CounterTemp++;
-                        Counter++;
                         Reset = true;
                         RunMeasurement = false;
                     }
@@ -192,7 +155,6 @@ namespace CounterTrigger
                     if (CountersArray[4] % 2 != 0)
                     {
                         CounterTemp++;
-                        Counter++;
                         Reset = true;
                         RunMeasurement = false;
                     }
@@ -205,7 +167,6 @@ namespace CounterTrigger
                     if (CountersArray[5] % 2 != 0)
                     {
                         CounterTemp++;
-                        Counter++;
                         Reset = true;
                         RunMeasurement = false;
                     }
@@ -217,8 +178,41 @@ namespace CounterTrigger
                 default:
                     break;
             }
-            
 
+
+        }
+        
+        private void MeasurementDisplay()
+        {
+            if ((CounterTemp % 2) == 0)             //is even? //measurement is on as long as CounterTemp==0 
+            {
+                CounterString = "Measurement " + TempCounter.ToString();
+                TempCounter++;                      //not needed in LabVIEW
+            }
+            else
+            {
+                CounterString = "Adjustment";
+                TempCounter = 1;                    //not needed in LabVIEW
+            }
+        }
+
+        private int CounterFunction(int Measurements)
+        {
+            if (Reset == false)
+            {
+                int temp;
+                temp = Counter / Measurements;
+                Counter++;
+                return temp;
+                
+            }
+            else
+            {
+                Counter = 0;
+                Counter++;
+                Reset = false;
+                return Counter / Measurements;
+            }
         }
 
         private void Measurement1()
@@ -338,4 +332,99 @@ namespace CounterTrigger
         } 
         #endregion
     }
+
+
+    //public class MeasurementsClass
+    //{
+    //    ViewModel VM = new ViewModel();
+
+    //    public void MeasurementsFunction(int Measurement, int[] CountersArray)
+    //    {
+    //        switch (Measurement)
+    //        {
+    //            case 1:
+    //                if (CountersArray[0] % 2 != 0)
+    //                {
+
+    //                    VM.CounterTemp++;
+    //                    VM.Counter++;
+    //                    VM.Reset = true;
+    //                }
+    //                else
+    //                {
+    //                    VM.CounterTemp = CountersArray[0];
+    //                }
+    //                break;
+    //            case 2:
+    //                if (CountersArray[1] % 2 != 0)
+    //                {
+    //                    VM.CounterTemp++;
+    //                    VM.Counter++;
+    //                    VM.Reset = true;
+    //                }
+    //                else
+    //                {
+    //                    VM.CounterTemp = CountersArray[1];
+    //                }
+    //                break;
+    //            case 3:
+    //                if (CountersArray[2] % 2 != 0)
+    //                {
+    //                    VM.CounterTemp++;
+    //                    VM.Counter++;
+    //                    VM.Reset = true;
+    //                    VM.RunMeasurement = false;
+    //                }
+    //                else
+    //                {
+    //                    VM.CounterTemp = CountersArray[2];
+    //                }
+    //                break;
+    //            case 4:
+    //                if (CountersArray[3] % 2 != 0)
+    //                {
+    //                    VM.CounterTemp++;
+    //                    VM.Counter++;
+    //                    VM.Reset = true;
+    //                    VM.RunMeasurement = false;
+    //                }
+    //                else
+    //                {
+    //                    VM.CounterTemp = CountersArray[3];
+    //                }
+    //                break;
+    //            case 5:
+    //                if (CountersArray[4] % 2 != 0)
+    //                {
+    //                    VM.CounterTemp++;
+    //                    VM.Counter++;
+    //                    VM.Reset = true;
+    //                    VM.RunMeasurement = false;
+    //                }
+    //                else
+    //                {
+    //                    VM.CounterTemp = CountersArray[4];
+    //                }
+    //                break;
+    //            case 6:
+    //                if (CountersArray[5] % 2 != 0)
+    //                {
+    //                    VM.CounterTemp++;
+    //                    VM.Counter++;
+    //                    VM.Reset = true;
+    //                    VM.RunMeasurement = false;
+    //                }
+    //                else
+    //                {
+    //                    VM.CounterTemp = CountersArray[5];
+    //                }
+    //                break;
+    //            default:
+    //                break;
+    //        }
+
+
+    //    }
+
+    //}
 }
